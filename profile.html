@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - EduHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnwMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="auth.js"></script>
+    <script>
+        requireAuth();
+    </script>
+    <style>
+        :root {
+            --primary: #813287;
+            --secondary: #ac4da4;
+            --bg: #f8f9fa;
+            --white: #ffffff;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --border: #dfe6e9;
+            --success: #00b894;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); }
+        
+        .navbar { background: var(--white); padding: 15px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 700; color: var(--primary); text-decoration: none; }
+        .back-btn { padding: 8px 15px; border-radius: 20px; text-decoration: none; color: var(--text-dark); font-weight: 500; }
+        .back-btn:hover { background: var(--bg); }
+        
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 300px 1fr; gap: 30px; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+        
+        .card { background: var(--white); border-radius: 15px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        
+        .profile-sidebar { text-align: center; }
+        .avatar-container { position: relative; width: 120px; height: 120px; margin: 0 auto 20px; }
+        .avatar { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 4px solid var(--white); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .edit-avatar-btn { position: absolute; bottom: 0; right: 0; background: var(--primary); color: var(--white); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid var(--white); }
+        .profile-name { font-size: 22px; margin-bottom: 5px; }
+        .profile-email { color: var(--text-light); font-size: 14px; margin-bottom: 20px; }
+        
+        .stat-box { background: var(--bg); padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .stat-box span { font-weight: 600; color: var(--primary); }
+        
+        .section-title { font-size: 20px; margin-bottom: 25px; border-bottom: 2px solid var(--bg); padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 8px; color: var(--text-light); }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 15px; transition: 0.3s; }
+        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(129,50,135,0.1); }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 500px) { .grid-2 { grid-template-columns: 1fr; } }
+        
+        .btn-save { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: var(--white); border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; }
+        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(129,50,135,0.3); }
+        
+        .toast { position: fixed; bottom: 30px; right: 30px; background: var(--success); color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 10px; transform: translateY(100px); opacity: 0; transition: 0.3s; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="display:flex; align-items:center; text-decoration:none;"><img src="EduHUB.png" alt="EduHub" style="height: 50px; border-radius: 8px;"></a>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </nav>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="card profile-sidebar">
+            <div class="avatar-container">
+                <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" class="avatar" id="displayAvatar">
+                <div class="edit-avatar-btn"><i class="fas fa-camera"></i></div>
+            </div>
+            <h2 class="profile-name" id="displayName">Student User</h2>
+            <p class="profile-email" id="displayEmail">student@eduhub.com</p>
+            
+            <div style="margin-top: 30px; text-align: left;">
+                <h3 style="font-size:16px; margin-bottom:15px; color:var(--text-light);">Learning Stats</h3>
+                <div class="stat-box">Platforms Completed <span>0</span></div>
+                <div class="stat-box">Current Streak <span style="color:#e17055;">7 Days</span></div>
+                <div class="stat-box">Account Tier <span style="color:#f1c40f;">Free</span></div>
+            </div>
+        </div>
+
+        <!-- Edit Form -->
+        <div class="card">
+            <h2 class="section-title">Edit Profile Details</h2>
+            <form id="profileForm">
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" id="inputName" value="Student User" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" id="inputEmail" value="student@eduhub.com" required>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Academic Stream</label>
+                        <select class="form-control" id="inputStream">
+                            <option value="PCM">Science (PCM)</option>
+                            <option value="PCB">Science (PCB)</option>
+                            <option value="Commerce">Commerce</option>
+                            <option value="Arts">Arts & Humanities</option>
+                            <option value="Undecided">Undecided</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Target Exam / Goal</label>
+                        <select class="form-control" id="inputGoal">
+                            <option value="JEE">JEE (Engineering)</option>
+                            <option value="NEET">NEET (Medical)</option>
+                            <option value="CUET">CUET (Central Univ.)</option>
+                            <option value="Board Exams">Board Exams</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Short Bio or Study Motivation</label>
+                    <textarea class="form-control" id="inputBio" rows="3" placeholder="I am preparing for JEE and aiming for IIT Bombay..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast" id="successToast">
+        <i class="fas fa-check-circle"></i>
+        <span>Profile updated successfully!</span>
+    </div>
+
+    <script>
+        // Load data from localStorage
+        const profileData = JSON.parse(localStorage.getItem('edu_user_profile')) || {
+            name: 'Student User',
+            email: 'student@eduhub.com',
+            stream: 'PCM',
+            goal: 'JEE',
+            bio: ''
+        };
+
+        // Populate fields on load
+        document.getElementById('inputName').value = profileData.name;
+        document.getElementById('inputEmail').value = profileData.email;
+        document.getElementById('inputStream').value = profileData.stream;
+        document.getElementById('inputGoal').value = profileData.goal;
+        document.getElementById('inputBio').value = profileData.bio;
+        
+        // Update Sidebar
+        document.getElementById('displayName').innerText = profileData.name;
+        document.getElementById('displayEmail').innerText = profileData.email;
+
+        // Save Form
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Collect Data
+            const updatedProfile = {
+                name: document.getElementById('inputName').value,
+                email: document.getElementById('inputEmail').value,
+                stream: document.getElementById('inputStream').value,
+                goal: document.getElementById('inputGoal').value,
+                bio: document.getElementById('inputBio').value
+            };
+
+            // Save to localStorage
+            localStorage.setItem('edu_user_profile', JSON.stringify(updatedProfile));
+
+            // Update Sidebar instantly
+            document.getElementById('displayName').innerText = updatedProfile.name;
+            document.getElementById('displayEmail').innerText = updatedProfile.email;
+
+            // Show Toast Notification
+            const toast = document.getElementById('successToast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

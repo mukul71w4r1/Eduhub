@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnwMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+    <script src="auth.js"></script>
+</head>
+<body>
+    <div class="card">
+        <div class="content">
+            <img src="EduHUB.png" class="logo" alt="EduHub" style="height: 60px; margin-bottom: 25px; border-radius: 10px; object-fit: contain;">
+            <h2>Login</h2>
+            <h3>Please enter your credentials</h3>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <div class="row">
+                    <label class="checkbox">
+                        <input type="checkbox">
+                        <div class="check"></div>
+                        Remember me
+                    </label>
+                    <a href="#">Forgot password?</a>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            <p style="margin-top: 15px;"><a href="index.html" style="color:var(--color-muted);"><i class="fas fa-arrow-left"></i> Back to Home</a></p>
+        </div>
+        <div class="hero">
+            <img src="EduHUB.png" class="logo-white" alt="EduHub" style="height: 60px; margin-bottom: 25px; border-radius: 10px; object-fit: contain;">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop" class="graphic" alt="Students learning">
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const result = loginUser(email, password);
+            if(result && result.success) {
+                window.location.href = result.redirect;
+            } else if(result) {
+                alert('Invalid email or password');
+            }
+        });
+    </script>
+</body>
+</html>
