@@ -122,28 +122,24 @@ Open `index.html` in your browser.
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-
-> *(Add screenshot here)*
-
----
+<p align="center">
+  <img src="screenshots/home.png" alt="Home" width="300">
+</p>
 
 ### 🔐 Login Page
-
-> *(Add screenshot here)*
-
----
+<p align="center">
+  <img src="screenshots/login.png" alt="Login" width="300">
+</p>
 
 ### 📚 Courses Page
-
-> *(Add screenshot here)*
-
----
+<p align="center">
+  <img src="screenshots/course.png" alt="Course" width="300">
+</p>
 
 ### 👤 Profile Page
-
-> *(Add screenshot here)*
-
----
+<p align="center">
+  <img src="screenshots/profile.png" alt="Profile" width="300">
+</p>
 
 ## 🎯 Future Enhancements
 
